@@ -44,8 +44,8 @@ const ADVANCED: &str = "Advanced";
 struct Cli {
     #[arg(long, global = true, env = "CERUL_ROBOTICS_WORKSPACE")]
     workspace: Option<PathBuf>,
-    /// Compatibility option: this CLI always uses operator-supplied media tools.
-    #[arg(long, global = true, hide = true)]
+    /// Check media tools without downloading or selecting automatic repairs
+    #[arg(long, global = true)]
     no_auto_deps: bool,
     #[arg(long, global = true)]
     json: bool,
@@ -329,6 +329,35 @@ fn credentials() -> cerul::providers::CredentialResolver {
         })
     })
 }
+/// Rejects unreadable inputs before any media preparation, plan or model request.
+fn readable(paths: &[PathBuf]) -> Result<()> {
+    for path in paths {
+        ensure!(
+            path.exists(),
+            ConfigurationError(format!("no such file or directory: {}", path.display()))
+        );
+    }
+    Ok(())
+}
+
+/// Same rule as the core CLI: verify or fetch compatible media tools before a
+/// command decodes or encodes media, so a fresh install needs no system FFmpeg.
+async fn prepare_media(
+    cli: &Cli,
+    workspace: &std::path::Path,
+    cancel: &CancellationToken,
+    events: &mut dyn cerul::events::EventSink,
+) -> Result<()> {
+    cerul::media::dependencies::prepare(workspace, !cli.no_auto_deps, cli.dry_run, cancel, events)
+        .await
+        .map_err(|error| {
+            ProviderError {
+                kind: Failure::Unsupported,
+                message: format!("{error:#}"),
+            }
+            .into()
+        })
+}
 async fn run(cli: &Cli, cancel: CancellationToken) -> Result<(Value, u8)> {
     let home = std::env::var_os("HOME").map(PathBuf::from);
     let workspace = cli
@@ -426,6 +455,8 @@ async fn run(cli: &Cli, cancel: CancellationToken) -> Result<(Value, u8)> {
                 request_notice: notice,
             };
             options.validate().map_err(invalid)?;
+            readable(&a.paths)?;
+            prepare_media(cli, &workspace, &cancel, &mut events).await?;
             let mut report = annotate::pipeline::run(
                 &a.paths,
                 &workspace,
@@ -444,18 +475,22 @@ async fn run(cli: &Cli, cancel: CancellationToken) -> Result<(Value, u8)> {
             out,
             stream,
             watermark,
-        } => Ok((
-            serde_json::to_value(annotate::video::render(
-                path,
-                &workspace,
-                out,
-                stream.as_deref(),
-                *watermark,
-                cli.dry_run,
-                &cancel,
-            )?)?,
-            0,
-        )),
+        } => {
+            readable(std::slice::from_ref(path))?;
+            prepare_media(cli, &workspace, &cancel, &mut events).await?;
+            Ok((
+                serde_json::to_value(annotate::video::render(
+                    path,
+                    &workspace,
+                    out,
+                    stream.as_deref(),
+                    *watermark,
+                    cli.dry_run,
+                    &cancel,
+                )?)?,
+                0,
+            ))
+        }
         Command::Index(a) => {
             ensure!(
                 a.jobs > 0 && a.rpm != Some(0),
@@ -474,6 +509,8 @@ async fn run(cli: &Cli, cancel: CancellationToken) -> Result<(Value, u8)> {
                 ..Default::default()
             };
             options.embedding.recompute = cli.recompute;
+            readable(&a.paths)?;
+            prepare_media(cli, &workspace, &cancel, &mut events).await?;
             let report = cerul::index::pipeline::run_with_adapter(
                 &a.paths,
                 &workspace,
@@ -502,6 +539,8 @@ async fn run(cli: &Cli, cancel: CancellationToken) -> Result<(Value, u8)> {
                 request_notice: notice,
                 ..Default::default()
             };
+            readable(&a.paths)?;
+            prepare_media(cli, &workspace, &cancel, &mut events).await?;
             let report = cerul::analyze::run_with_adapter(
                 &a.paths,
                 &workspace,
@@ -537,6 +576,9 @@ async fn run(cli: &Cli, cancel: CancellationToken) -> Result<(Value, u8)> {
                 ..Default::default()
             };
             options.validate().map_err(invalid)?;
+            if options.save.is_some() && !cli.dry_run {
+                prepare_media(cli, &workspace, &cancel, &mut events).await?;
+            }
             Ok((
                 serde_json::to_value(
                     cerul::search::run(&workspace, &config, &options, cancel).await?,

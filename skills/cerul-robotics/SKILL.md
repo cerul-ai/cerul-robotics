@@ -5,6 +5,21 @@ description: Annotate, search and review robot episodes and LeRobot datasets usi
 
 # Cerul Robotics
 
+## Before anything else
+
+Run `cerul-robotics --version`. If the command is missing, install the published
+release; it is a single binary and needs no Rust, Python or system FFmpeg:
+
+```sh
+curl -fsSL https://github.com/cerul-ai/cerul-robotics/releases/latest/download/cerul-robotics-installer.sh | sh
+```
+
+Do not build from source or install a Rust toolchain to work around a failed
+download; report the error instead. Media tools are fetched and verified on first
+use unless `--no-auto-deps` is set.
+
+## Working with episodes
+
 Run `cerul-robotics --help` and command help before processing. Start with one episode and `--dry-run`. Semantic annotation uses the configured vision endpoint; do not call generated labels human-verified ground truth. Never infer trained policy quality from annotation output.
 
 Use `cerul-robotics annotate DATASET --only 0 --semantic --json` for subtasks, events, interactions and states. Use `--hands --semantic none` for local human-hand keypoints only. Robot gripper detection, depth and calibrated 3D poses are not implemented.

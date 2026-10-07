@@ -9,19 +9,31 @@ OCR, retrieval and authoritative sidecars. It does not duplicate the core engine
 
 ## Install
 
-Requires a stable Rust toolchain, protobuf for the build, and compatible FFmpeg
-and ffprobe executables at runtime. No Python or GPU runtime is required to use
-the CLI. Python is needed only for official LeRobot loader acceptance tests.
+Supports **macOS Apple Silicon** and **Linux x86_64**.
 
 ```sh
-cargo install --git https://github.com/cerul-ai/cerul-robotics --locked
-cerul-robotics --help
+curl -fsSL https://github.com/cerul-ai/cerul-robotics/releases/latest/download/cerul-robotics-installer.sh | sh
+cerul-robotics --version
 ```
 
-The initial extraction is delivered through a pull request. Installation from
-`main` becomes available after that PR merges; no binary release is claimed yet.
+The release is one self-contained binary with the hand models embedded. No Rust,
+Python, GPU runtime or system FFmpeg is required: compatible media tools are
+downloaded and checksum-verified on first use. Set `CERUL_FFMPEG` and
+`CERUL_FFPROBE`, or pass `--no-auto-deps`, to use your own.
+
+To let a coding agent drive it, add the skill:
+
+```sh
+npx skills add cerul-ai/cerul-robotics
+```
+
+Building from source instead needs a stable Rust toolchain and protobuf:
+`cargo install --git https://github.com/cerul-ai/cerul-robotics --locked`.
 
 ## Start with one episode
+
+Upgrading from `cerul annotate`? Your earlier labels live in the Cerul workspace.
+Add `--workspace ~/.cerul` to `status`, `search` and `render` to read them.
 
 Set your model provider key securely in the environment, or reuse an existing
 endpoint-scoped key saved by `cerul auth set`. Configuration follows Cerul:

@@ -42,3 +42,8 @@ rustix = { version = "1.1", features = ["fs"] }
 [profile.dev]
 debug = 0
 incremental = false
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"

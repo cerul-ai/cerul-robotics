@@ -284,3 +284,35 @@ fn product_configuration_is_isolated_and_json_errors_are_structured() {
     );
     assert!(!dir.path().join(".cerul-robotics").exists());
 }
+
+#[test]
+fn media_commands_check_tools_first_and_never_download_when_disabled() {
+    let dir = tempfile::tempdir().unwrap();
+    video(dir.path());
+    let output = Command::new(env!("CARGO_BIN_EXE_cerul-robotics"))
+        .current_dir(dir.path())
+        .env_clear()
+        .env("PATH", dir.path())
+        .env("HOME", dir.path())
+        .args([
+            "--json",
+            "--no-auto-deps",
+            "annotate",
+            "sample.mp4",
+            "--hands",
+            "--semantic",
+            "none",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(output.status.code(), Some(3));
+    let error = final_json(&output);
+    assert_eq!(error["error"]["code"], "missing_capability");
+    let message = error["error"]["message"].as_str().unwrap();
+    assert!(
+        message.contains("automatic dependency repair is disabled"),
+        "{message}"
+    );
+    assert!(!dir.path().join(".cerul-robotics/runtime/media").exists());
+    assert!(!dir.path().join("sample.mp4.cerul").exists());
+}
