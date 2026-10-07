@@ -1,0 +1,4 @@
+/target/
+/.workspace/
+.env
+.env.*

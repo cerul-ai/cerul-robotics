@@ -1,0 +1,44 @@
+[package]
+name = "cerul-robotics"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+description = "Robot episode annotation and LeRobot workflows powered by Cerul"
+repository = "https://github.com/cerul-ai/cerul-robotics"
+
+include = ["/Cargo.toml", "/Cargo.lock", "/LICENSE", "/THIRD_PARTY_NOTICES.md", "/PROVENANCE.md", "/README.md", "/src/**/*.rs", "/examples/*.rs", "/docs/**/*.md", "/prompts/*.md", "/schemas/*.json", "/skills/**/*.md", "/models/hands/*", "/packaging/licenses/*", "/tests/*.rs", "/tests/*.py", "/tests/fixtures/*"]
+
+[dependencies]
+cerul = { git = "https://github.com/cerul-ai/cerul", rev = "b92446d783df93bb97162e2ae807237814da7f9e" }
+anyhow = "1"
+clap = { version = "4", features = ["derive", "env"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+schemars = "1"
+sha2 = "0.11"
+toml = "1.1"
+url = "2"
+# Keep Arrow and Parquet on the major version used by LanceDB.
+arrow-array = "58"
+arrow-schema = "58"
+arrow-json = "58"
+arrow-select = "58"
+uuid = { version = "1", features = ["v4"] }
+parquet = { version = "58", default-features = false, features = ["arrow", "zstd", "snap"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal", "time"] }
+base64 = "0.22"
+tokio-util = { version = "0.7", features = ["rt"] }
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+tract-onnx = "0.23.6"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+imageproc = { version = "0.27", default-features = false }
+
+tempfile = "3"
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "1.1", features = ["fs"] }
+
+
+[profile.dev]
+debug = 0
+incremental = false
