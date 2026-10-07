@@ -43,4 +43,3 @@ The five-episode, 40-frame fixture covers existing and absent language columns.
 The harness compares original fields, decoded images, actions, state, untouched
 episodes, and active subtask timestamps. A rejected validator must leave the
 output unpublished. Python is a test dependency, not a Cerul runtime dependency.
-
