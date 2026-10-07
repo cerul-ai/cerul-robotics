@@ -808,7 +808,7 @@ dependencies = [
 [[package]]
 name = "cerul"
 version = "0.0.17"
-source = "git+https://github.com/cerul-ai/cerul?rev=b92446d783df93bb97162e2ae807237814da7f9e#b92446d783df93bb97162e2ae807237814da7f9e"
+source = "git+https://github.com/cerul-ai/cerul?rev=46df5706c509acf009fb9253fcd2ad754dd3d9a9#46df5706c509acf009fb9253fcd2ad754dd3d9a9"
 dependencies = [
  "anyhow",
  "arrow-array",
