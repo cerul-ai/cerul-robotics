@@ -462,6 +462,30 @@ pub fn validate_output(root: &Path, destination: &Path) -> Result<()> {
     Ok(())
 }
 
+/// Rehash selected video shards against the content that produced the assignments.
+/// The caller holds the source dataset lock; staged copies use the same relative paths.
+pub(super) fn verify_video_content(root: &Path, assignments: &[Assignment<'_>]) -> Result<()> {
+    let mut expected = BTreeMap::new();
+    for assignment in assignments {
+        assignment.episode.validate()?;
+        for stream in &assignment.episode.streams {
+            if let Stream::Video { path, sha256, .. } = stream
+                && let Some(previous) = expected.insert(path, sha256)
+            {
+                ensure!(previous == sha256, "assignments disagree on video content");
+            }
+        }
+    }
+    for (path, expected) in expected {
+        ensure!(
+            crate::media::sha256(&root.join(path))? == *expected,
+            "video content changed before writeback: {}",
+            path.display()
+        );
+    }
+    Ok(())
+}
+
 /// Build a complete output dataset and run the caller's validator before publication.
 /// Native callers need no Python dependency; acceptance tests additionally use the official loader.
 pub fn write_out(
@@ -491,6 +515,7 @@ pub(super) fn write_out_locked(
         "writeback requires an existing v3.1 dataset"
     );
     validate_output(&root, destination)?;
+    verify_video_content(&root, assignments)?;
     let parent = destination
         .parent()
         .filter(|p| !p.as_os_str().is_empty())
@@ -547,6 +572,7 @@ pub(super) fn write_out_locked(
     crate::storage::write_json(&stage.path().join("meta/info.json"), &info)?;
     super::read(stage.path())?;
     validate(stage.path())?;
+    verify_video_content(stage.path(), assignments)?;
     crate::media::check_cancellation()?;
     ensure!(
         !destination.exists(),
@@ -561,6 +587,111 @@ pub(super) fn write_out_locked(
 mod tests {
     use super::*;
     use crate::annotations::{Header, Model, Record};
+    #[test]
+    fn stale_video_content_cannot_publish_subtasks() {
+        for in_place in [false, true] {
+            for during_validation in [false, true] {
+                let dir = tempfile::tempdir().unwrap();
+                let root = dir.path().join("dataset");
+                crate::lerobot::tests::fixture(&root, "v3.1");
+                let episode = crate::lerobot::read(&root).unwrap().remove(0);
+                let mut annotation = AnnotationFile {
+                    header: Header {
+                        schema: "annotation/1".into(),
+                        name: "semantic.subtask".into(),
+                        episode: episode.episode_id.clone(),
+                        stream: episode.time.reference.clone(),
+                        model: Model {
+                            kind: "fixture".into(),
+                            name: "test".into(),
+                            base_url: None,
+                        },
+                        params: json!({}),
+                        created: "2026-10-07T00:00:00Z".into(),
+                        cerul_version: "test".into(),
+                        input_hash: String::new(),
+                        record_schema: "semantic.subtask/1".into(),
+                    },
+                    records: vec![Record {
+                        id: "s0".into(),
+                        start_us: 0,
+                        end_us: episode.duration_us().unwrap(),
+                        confidence: None,
+                        fields: BTreeMap::from([
+                            ("text".into(), json!("Move cup")),
+                            ("index".into(), json!(0)),
+                        ]),
+                    }],
+                };
+                annotation.header.input_hash = crate::index::stations::station_key(
+                    &episode,
+                    &annotation.header.stream,
+                    &annotation.header.name,
+                    &annotation.header.params,
+                )
+                .unwrap();
+                let Stream::Video { path, .. } = episode.video(&episode.time.reference).unwrap()
+                else {
+                    unreachable!()
+                };
+                let replace = |dataset: &Path| {
+                    crate::media::run(
+                        crate::media::command("ffmpeg")
+                            .args([
+                                "-v",
+                                "error",
+                                "-y",
+                                "-f",
+                                "lavfi",
+                                "-i",
+                                "color=c=blue:size=64x64:rate=2:duration=8",
+                                "-c:v",
+                                "libx264",
+                            ])
+                            .arg(dataset.join(path)),
+                    )
+                    .unwrap();
+                };
+                let protected = ["meta/info.json", "data/chunk-000/file-000.parquet"]
+                    .map(|name| (name, fs::read(root.join(name)).unwrap()));
+                if !during_validation {
+                    replace(&root);
+                }
+                let validate = |stage: &Path| {
+                    if during_validation {
+                        replace(if in_place { &root } else { stage });
+                    }
+                    Ok(())
+                };
+                let assignments = [Assignment {
+                    episode: &episode,
+                    subtasks: &annotation,
+                }];
+                let output = dir.path().join("output");
+                let result = if in_place {
+                    super::super::transaction::write_in_place(&root, &assignments, validate)
+                } else {
+                    write_out(&root, &output, &assignments, validate)
+                };
+                assert!(
+                    result.is_err(),
+                    "stale video accepted: in_place={in_place}, during_validation={during_validation}"
+                );
+                assert!(
+                    result
+                        .unwrap_err()
+                        .to_string()
+                        .contains("video content changed")
+                );
+                assert!(!output.exists());
+                assert!(!root.join(".cerul/writeback").exists());
+                for (name, before) in protected {
+                    assert_eq!(fs::read(root.join(name)).unwrap(), before);
+                }
+            }
+        }
+    }
+
     #[test]
     fn staged_subtasks_preserve_protected_columns_and_other_episode_language() {
         let dir = tempfile::tempdir().unwrap();

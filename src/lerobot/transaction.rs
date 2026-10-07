@@ -225,6 +225,8 @@ pub fn write_in_place(
     let stage = tempfile::tempdir()?;
     let output = stage.path().join("dataset");
     write_out_locked(&root, &output, assignments, validate)?;
+    // A validator may take time; recheck the live media before changing source shards.
+    super::writer::verify_video_content(&root, assignments)?;
     let journal = prepare(&root, &output, &originals).context("preparing writeback")?;
     let result = commit(&root, journal, |_| Ok(()));
     if result.is_err() {
