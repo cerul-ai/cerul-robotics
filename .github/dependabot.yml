@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # Proposes newer Cerul core release tags for the git dependency.
+      cerul-core:
+        patterns:
+          - "cerul"
+      arrow-storage:
+        patterns:
+          - "arrow-*"
+          - "parquet"
+    # Arrow and Parquet must stay on the major version used by Cerul's LanceDB.
+    ignore:
+      - dependency-name: "arrow-*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "parquet"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
