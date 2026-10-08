@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cerul Robotics — Home</title>
+<meta name="description" content="Label robot episodes with your own models: subtasks, events, contacts, state changes and hand tracks, written back to LeRobot.">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Instrument+Serif:ital@1&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0a0c}
+a{color:#c3d1fb}a:hover{color:#e3e9fe}
+code{font-family:'Geist Mono',ui-monospace,monospace}
+</style>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add("js")</script>
+<script src="assets/site.js" defer></script>
+</head>
+<body>
+<div style="background: #0a0a0c; color: #eeeef0; font-family: 'Geist', ui-sans-serif, sans-serif; font-size: 16px; line-height: 1.55; overflow: hidden">
+
+<section data-episode data-still="3.9" style="position: relative; min-height: 940px; display: flex; flex-direction: column; overflow: hidden">
+<video class="hero-media" data-episode-video data-autoplay muted loop playsinline preload="auto" poster="media/hands-3.9.jpg" aria-label="First-person loom episode with tracked hand keypoints drawn over the left hand" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%"><source src="media/hero.mp4" type="video/mp4"></video>
+<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,12,0.82) 0%, rgba(10,10,12,0.25) 30%, rgba(10,10,12,0.35) 55%, rgba(10,10,12,0.96) 88%, #0a0a0c 100%)"></div>
+<div style="position: absolute; inset: 0; background: radial-gradient(60% 50% at 62% 62%, rgba(159,182,247,0.18), transparent 70%)"></div>
+<div class="hero-scan" aria-hidden="true"></div>
+
+<nav style="position: relative; max-width: 1320px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 22px clamp(16px,4vw,40px); display: flex; flex-wrap: wrap; align-items: center; gap: 28px">
+<a href="index.html" class="brand" aria-label="Cerul Robotics home"><svg class="brand-mark" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="229" fill="#eef0f4"/><g transform="translate(226 226) scale(1.126)" fill="#15171c"><rect width="211" height="508" rx="22"/><rect x="297" y="91" width="211" height="112" rx="22"/><rect x="297" y="301" width="211" height="207" rx="22"/></g></svg><span class="brand-word">Cerul</span><span class="brand-sub">Robotics</span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 26px; flex: 1 1 auto; font-size: 15px">
+<a href="showcase.html" style="color: #d0d1d6; text-decoration: none">Showcase</a>
+<a href="docs.html" style="color: #d0d1d6; text-decoration: none">Docs</a>
+<a href="https://github.com/cerul-ai/cerul-robotics/blob/main/CHANGELOG.md" style="color: #d0d1d6; text-decoration: none">Changelog</a>
+<a href="https://github.com/cerul-ai/cerul-robotics" style="color: #d0d1d6; text-decoration: none">GitHub</a>
+</div>
+<a href="#install" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 500">Install · free</a>
+</nav>
+
+<div class="hero-callouts" style="position: absolute; top: 112px; right: max(clamp(16px,4vw,40px), calc((100% - 1320px) / 2 + 40px)); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; max-width: 360px">
+<div class="callout" style="padding: 10px 14px; border-radius: 10px; background: rgba(10,10,12,0.72); border: 1px solid #9fb6f7; box-shadow: 0 0 32px rgba(159,182,247,0.35); font-size: 13px; backdrop-filter: blur(6px)">
+<code class="swap" data-callout-subtask-time style="color: #9fb6f7">subtask · 2.200–4.800 s</code>
+<div class="swap" data-callout-subtask-text style="display: block; margin-top: 4px">Repositioning left hand and adjusting warp threads across the reed</div>
+</div>
+<div class="callout" data-callout-event style="padding: 8px 12px; border-radius: 8px; background: rgba(10,10,12,0.72); border: 1px solid rgba(226,181,107,0.8); box-shadow: 0 0 24px rgba(226,181,107,0.3); font-size: 13px; backdrop-filter: blur(6px)"><code style="color: #e2b56b">event</code> · <span class="swap" data-callout-event-text>pull · thread → loom</span></div>
+<div class="callout" style="padding: 8px 12px; border-radius: 8px; background: rgba(10,10,12,0.72); border: 1px solid rgba(255,255,255,0.3); font-size: 13px; backdrop-filter: blur(6px)"><code style="color: #d0d1d6; white-space: nowrap"><span class="live-dot" aria-hidden="true"></span>&nbsp; hands · 21 keypoints · <span data-callout-hands>frame 118 / 210</span></code></div>
+</div>
+
+<div style="position: relative; margin-top: auto; max-width: 1320px; width: 100%; box-sizing: border-box; margin-left: auto; margin-right: auto; padding: 0 clamp(16px,4vw,40px) 48px">
+<div class="rise" style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.14em; color: #9fb6f7">OPEN SOURCE · NO ACCOUNT · YOUR MODELS</div>
+<h1 class="rise rise-1" style="margin: 18px 0 0; max-width: 1100px; font-size: clamp(48px,7.4vw,108px); line-height: 0.96; font-weight: 600; letter-spacing: -0.045em">Turn experience captured on video into machine capability.</h1>
+<div class="rise rise-2" style="margin-top: 40px; padding: 20px 22px; border-radius: 16px; backdrop-filter: blur(10px); background: rgba(18,18,21,0.78); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 30px 80px rgba(0,0,0,0.5)">
+<div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 12px; color: #8e9097; padding-left: 108px"><span>0 s</span><span class="narrow-hide">episode 6774a70f/0 · <span data-time style="color: #eeeef0">3.900 s</span></span><span>7.0 s</span></div>
+<div style="position: relative; margin-top: 12px; display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 96px; flex: none; color: #a6a8ae">subtask</span><div style="position: relative; flex: 1; height: 22px; border-radius: 5px; background: rgba(255,255,255,0.06)">
+<div class="bar" data-s="0" data-e="2.2" style="--glow: rgba(159,182,247,0.9); position: absolute; left: 0%; width: 31%; top: 3px; bottom: 3px; border-radius: 3px; background: #9fb6f7"></div>
+<div class="bar" data-s="2.2" data-e="4.8" style="--glow: rgba(159,182,247,0.9); position: absolute; left: 31.6%; width: 36.8%; top: 3px; bottom: 3px; border-radius: 3px; background: #9fb6f7; opacity: 0.8"></div>
+<div class="bar" data-s="4.8" data-e="5.4" style="--glow: rgba(159,182,247,0.9); position: absolute; left: 68.9%; width: 8.2%; top: 3px; bottom: 3px; border-radius: 3px; background: #9fb6f7; opacity: 0.6"></div>
+<div class="bar" data-s="5.4" data-e="7" style="--glow: rgba(159,182,247,0.9); position: absolute; left: 77.5%; width: 22.5%; top: 3px; bottom: 3px; border-radius: 3px; background: #9fb6f7; opacity: 0.8"></div>
+</div></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 96px; flex: none; color: #a6a8ae">event</span><div style="position: relative; flex: 1; height: 22px; border-radius: 5px; background: rgba(255,255,255,0.06)">
+<div class="bar" data-s="0" data-e="1.5" style="--glow: rgba(226,181,107,0.9); position: absolute; left: 0%; width: 21.4%; top: 3px; bottom: 3px; border-radius: 3px; background: #e2b56b"></div>
+<div class="bar" data-s="3.3" data-e="4.5" style="--glow: rgba(226,181,107,0.9); position: absolute; left: 47.1%; width: 17.1%; top: 3px; bottom: 3px; border-radius: 3px; background: #e2b56b"></div>
+<div class="bar" data-s="5.9" data-e="7" style="--glow: rgba(226,181,107,0.9); position: absolute; left: 84.3%; width: 15.7%; top: 3px; bottom: 3px; border-radius: 3px; background: #e2b56b"></div>
+</div></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 96px; flex: none; color: #a6a8ae">interaction</span><div style="position: relative; flex: 1; height: 22px; border-radius: 5px; background: rgba(255,255,255,0.06)">
+<div class="bar" data-s="0" data-e="4.8" style="--glow: rgba(228,229,232,0.7); position: absolute; left: 0%; width: 68.6%; top: 3px; height: 7px; border-radius: 2px; background: #e4e5e8"></div>
+<div class="bar" data-s="5.8" data-e="7" style="--glow: rgba(228,229,232,0.7); position: absolute; left: 82.9%; width: 17.1%; top: 3px; height: 7px; border-radius: 2px; background: #e4e5e8"></div>
+<div class="bar" data-s="0" data-e="7" style="--glow: rgba(228,229,232,0.7); position: absolute; left: 0%; width: 100%; bottom: 3px; height: 7px; border-radius: 2px; background: #6f7177"></div>
+</div></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 96px; flex: none; color: #a6a8ae">state</span><div style="position: relative; flex: 1; height: 22px; border-radius: 5px; background: rgba(255,255,255,0.06)">
+<div class="bar" data-s="3.6" data-e="4.4" style="--glow: rgba(255,255,255,0.9); position: absolute; left: 51.4%; width: 11.4%; top: 3px; bottom: 3px; border-radius: 3px; background: #ffffff"></div>
+</div></div>
+<div style="position: absolute; top: -6px; bottom: -6px; left: 108px; right: 0; pointer-events: none">
+<div data-playhead style="position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #ffffff; box-shadow: 0 0 12px #ffffff, 0 0 28px #9fb6f7; left: 55.7%"></div>
+</div>
+</div>
+<div style="display: flex; justify-content: flex-end; margin-top: 14px"><button type="button" class="motion-toggle" data-motion-toggle aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path data-motion-icon d="M5 3.5h2v9H5zM9 3.5h2v9H9z"></path></svg><span data-motion-label>Pause motion</span></button></div>
+</div>
+</div>
+</section>
+
+<section aria-label="Label types" class="marquee" style="border-top: 1px solid #1d1d21; border-bottom: 1px solid #1d1d21; padding: 28px 0; white-space: nowrap">
+<div style="display: inline-flex; gap: 56px; font-size: 64px; font-weight: 700; letter-spacing: -0.03em" class="marquee-track">
+<span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">TASK</span><span style="color: #9fb6f7">SUBTASK</span><span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">EVENT</span><span style="color: #e2b56b">INTERACTION</span><span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">STATE</span><span style="color: #eeeef0">FLAG</span><span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">PROGRESS</span><span style="color: #9fb6f7">HANDS</span>
+<span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">TASK</span><span style="color: #9fb6f7">SUBTASK</span><span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">EVENT</span><span style="color: #e2b56b">INTERACTION</span><span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">STATE</span><span style="color: #eeeef0">FLAG</span><span style="color: transparent; -webkit-text-stroke: 1px #4a4c52">PROGRESS</span><span style="color: #9fb6f7">HANDS</span>
+</div>
+</section>
+
+<section class="reveal" style="max-width: 1320px; margin: 0 auto; padding: 120px clamp(16px,4vw,40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 48px 40px">
+<div><div style="font-size: clamp(64px,7vw,104px); line-height: 0.9; font-weight: 600; letter-spacing: -0.05em" data-count="11">11</div><p style="margin: 16px 0 0; color: #a6a8ae; max-width: 240px">timed labels from a 7-second clip, one command.</p></div>
+<div><div style="font-size: clamp(64px,7vw,104px); line-height: 0.9; font-weight: 600; letter-spacing: -0.05em" data-count="210">210</div><p style="margin: 16px 0 0; color: #a6a8ae; max-width: 240px">hand frames tracked on CPU, no key, nothing uploaded.</p></div>
+<div><div style="font-size: clamp(64px,7vw,104px); line-height: 0.9; font-weight: 600; letter-spacing: -0.05em; color: #9fb6f7" data-count="5" data-suffix="/5">5/5</div><p style="margin: 16px 0 0; color: #a6a8ae; max-width: 240px">episodes pass the official LeRobot loader after writeback.</p></div>
+<div><div style="font-size: clamp(64px,7vw,104px); line-height: 0.9; font-weight: 600; letter-spacing: -0.05em" data-count="0">0</div><p style="margin: 16px 0 0; color: #a6a8ae; max-width: 240px">accounts. Download one binary and start.</p></div>
+</section>
+
+<section style="position: relative; padding: 0 0 120px">
+<div style="position: absolute; left: 50%; top: 40px; width: 900px; height: 500px; margin-left: -450px; background: radial-gradient(closest-side, rgba(159,182,247,0.16), transparent); pointer-events: none"></div>
+<div style="position: relative; max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px)">
+<h2 class="reveal" style="margin: 0; max-width: 820px; font-size: clamp(36px,4.6vw,64px); line-height: 1.02; font-weight: 600; letter-spacing: -0.035em">One episode, read like a score.</h2>
+<p style="margin: 20px 0 0; max-width: 560px; color: #a6a8ae; font-size: 18px">Every label sits on the episode’s own clock, in integer microseconds, so it lines up with frames, actions and state.</p>
+<div style="margin-top: 56px; overflow-x: auto">
+<div data-episode data-still="2.5" style="position: relative; min-width: 980px">
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+<img src="media/strip-1.jpg" alt="Frame at 0.3 seconds" class="strip-frame" data-t="0.3" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+<img src="media/strip-2.jpg" alt="Frame at 1.4 seconds" class="strip-frame" data-t="1.4" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+<img src="media/strip-3.jpg" alt="Frame at 2.5 seconds" class="strip-frame" data-t="2.5" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+<img src="media/strip-4.jpg" alt="Frame at 3.6 seconds" class="strip-frame" data-t="3.6" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+<img src="media/strip-5.jpg" alt="Frame at 4.7 seconds" class="strip-frame" data-t="4.7" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+<img src="media/strip-6.jpg" alt="Frame at 5.8 seconds" class="strip-frame" data-t="5.8" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+<img src="media/strip-7.jpg" alt="Frame at 6.8 seconds" class="strip-frame" data-t="6.8" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block">
+</div>
+<div style="position: relative; margin-top: 14px; height: 48px">
+<div class="bar" data-s="0" data-e="2.2" style="--glow: rgba(159,182,247,0.6); position: absolute; left: 0%; width: 30.7%; top: 0; height: 48px; box-sizing: border-box; padding: 6px 10px; border-radius: 6px; background: rgba(159,182,247,0.16); border-top: 2px solid #9fb6f7; font-size: 12px; overflow: hidden">Separating warp threads across the reed</div>
+<div class="bar" data-s="2.2" data-e="4.8" style="--glow: rgba(159,182,247,0.6); position: absolute; left: 31.6%; width: 36.5%; top: 0; height: 48px; box-sizing: border-box; padding: 6px 10px; border-radius: 6px; background: rgba(159,182,247,0.16); border-top: 2px solid #9fb6f7; font-size: 12px; overflow: hidden">Repositioning left hand, adjusting threads</div>
+<div class="bar" data-s="4.8" data-e="5.4" style="--glow: rgba(159,182,247,0.6); position: absolute; left: 68.9%; width: 8%; top: 0; height: 48px; box-sizing: border-box; padding: 6px 8px; border-radius: 6px; background: rgba(159,182,247,0.16); border-top: 2px solid #9fb6f7; font-size: 12px; overflow: hidden">Retract</div>
+<div class="bar" data-s="5.4" data-e="7" style="--glow: rgba(159,182,247,0.6); position: absolute; left: 77.5%; width: 22.5%; top: 0; height: 48px; box-sizing: border-box; padding: 6px 10px; border-radius: 6px; background: rgba(159,182,247,0.16); border-top: 2px solid #9fb6f7; font-size: 12px; overflow: hidden">Reaching forward, adjusting threads</div>
+</div>
+<div data-playhead aria-hidden="true" style="position: absolute; top: -6px; height: calc(100% - 22px); width: 2px; margin-left: -1px; background: #ffffff; box-shadow: 0 0 12px #ffffff, 0 0 24px #9fb6f7; left: 35.7%; pointer-events: none"></div>
+<div style="display: flex; justify-content: space-between; margin-top: 10px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6f7177"><span>0.000</span><span>2.200</span><span>4.800</span><span>5.400</span><span>7.000 s</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px) 120px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 1px; background: #1d1d21; border: 1px solid #1d1d21; border-radius: 20px; overflow: hidden">
+<div class="spot reveal" style="background: #0f0f12; padding: 40px 36px">
+<div style="font-size: 80px; font-weight: 300; line-height: 1; color: #9fb6f7">I</div>
+<h3 style="margin: 20px 0 8px; font-size: 26px; font-weight: 600">Observe</h3>
+<p style="margin: 0; color: #a6a8ae">Read LeRobot v3.0/v3.1 episodes or any video. Track human hands locally.</p>
+<code style="display: block; margin-top: 20px; font-size: 13px; color: #d0d1d6">annotate ./dataset --hands</code>
+</div>
+<div class="spot reveal reveal-2" style="background: #0f0f12; padding: 40px 36px">
+<div style="font-size: 80px; font-weight: 300; line-height: 1; color: #e2b56b">II</div>
+<h3 style="margin: 20px 0 8px; font-size: 26px; font-weight: 600">Understand</h3>
+<p style="margin: 0; color: #a6a8ae">Your vision model writes subtasks, events, contacts and state changes.</p>
+<code style="display: block; margin-top: 20px; font-size: 13px; color: #d0d1d6">annotate ./dataset --semantic</code>
+</div>
+<div class="spot reveal reveal-3" style="background: #0f0f12; padding: 40px 36px">
+<div style="font-size: 80px; font-weight: 300; line-height: 1; color: #ffffff">III</div>
+<h3 style="margin: 20px 0 8px; font-size: 26px; font-weight: 600">Write back</h3>
+<p style="margin: 0; color: #a6a8ae">Review it as video, then put subtasks into a new dataset copy for training.</p>
+<code style="display: block; margin-top: 20px; font-size: 13px; color: #d0d1d6">--write-lerobot --out ./labeled</code>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px) 120px">
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between">
+<h2 class="reveal" style="margin: 0; font-size: clamp(36px,4.6vw,64px); line-height: 1.02; font-weight: 600; letter-spacing: -0.035em">From the showcase</h2>
+<a href="showcase.html" style="font-size: 16px">See every episode →</a>
+</div>
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 16px">
+<a href="showcase.html" class="lift reveal" data-hover-video style="position: relative; display: block; border-radius: 18px; overflow: hidden; border: 1px solid #26262b; height: 520px; flex: 2 1 560px; min-width: 0; color: #ffffff; text-decoration: none">
+<video class="zoom-img" muted loop playsinline preload="none" poster="media/hands-1.0.jpg" aria-label="Loom episode with hand keypoints; plays on hover" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"><source src="media/hero.mp4" type="video/mp4"></video>
+<div style="position: absolute; inset: auto 0 0 0; padding: 24px; background: linear-gradient(0deg, rgba(10,10,12,0.92), transparent)"><code style="font-size: 12px; color: #9fb6f7">LOOM · 7.0 s · 11 labels · 210 hand frames</code><div style="margin-top: 6px; font-size: 22px; font-weight: 600">Hand weaving, first-person</div></div>
+</a>
+<a href="showcase.html" class="lift reveal reveal-2" style="position: relative; display: block; border-radius: 18px; overflow: hidden; border: 1px solid #26262b; height: 520px; flex: 1 1 300px; min-width: 0; color: #ffffff; text-decoration: none">
+<img src="media/hands-6.3.jpg" alt="Loom episode at 6.3 seconds" class="zoom-img" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+<div style="position: absolute; inset: auto 0 0 0; padding: 24px; background: linear-gradient(0deg, rgba(10,10,12,0.92), transparent)"><code style="font-size: 12px; color: #e2b56b">event · pull · 5.9–7.0 s</code><div style="margin-top: 6px; font-size: 20px; font-weight: 600">Reaching forward</div></div>
+</a>
+</div>
+</section>
+
+<section id="install" style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,4vw,40px) 120px">
+<div class="spot reveal" style="position: relative; border-radius: 28px; padding: clamp(32px,5vw,72px); background: #111114; border: 1px solid #26262b; overflow: hidden">
+<div style="position: absolute; right: -200px; top: -200px; width: 600px; height: 600px; background: radial-gradient(closest-side, rgba(159,182,247,0.28), transparent)" class="glow-pulse"></div>
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+<div style="flex: 1 1 420px; min-width: 0">
+<h2 style="margin: 0; font-size: clamp(34px,4vw,56px); line-height: 1.02; font-weight: 600; letter-spacing: -0.035em">No sign-up.<br>No hosted API yet.<br>Just a binary.</h2>
+<p style="margin: 20px 0 0; color: #a6a8ae; max-width: 460px">macOS Apple Silicon and Linux x86_64. Bring a Gemini key or any compatible endpoint. Apache-2.0.</p>
+</div>
+<div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<div style="padding: 18px 20px; border-radius: 14px; background: #0a0a0c; border: 1px solid #9fb6f7; box-shadow: 0 0 40px rgba(159,182,247,0.2); font-family: 'Geist Mono', monospace; font-size: 13.5px; overflow-x: auto; white-space: nowrap"><span style="color: #6f7177">$</span> curl -fsSL https://github.com/cerul-ai/cerul-robotics/releases/latest/download/cerul-robotics-installer.sh | sh</div>
+<div style="padding: 14px 20px; border-radius: 14px; background: #0a0a0c; border: 1px solid #26262b; font-family: 'Geist Mono', monospace; font-size: 13.5px; overflow-x: auto; white-space: nowrap"><span style="color: #6f7177">$</span> npx skills add cerul-ai/cerul-robotics <span style="color: #6f7177"># for coding agents</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="reveal" style="text-align: center; padding: 40px clamp(16px,4vw,40px) 140px">
+<h2 style="margin: 0 auto; max-width: 1200px; font-size: clamp(56px,9vw,148px); line-height: 0.9; font-weight: 700; letter-spacing: -0.055em">Every demonstration, <span style="position: relative; display: inline-block; color: #9fb6f7">readable.<span class="underline-draw" aria-hidden="true" style="position: absolute; left: 0.04em; right: 0.04em; bottom: -0.02em; height: 0.07em; border-radius: 999px; background: #9fb6f7; box-shadow: 0 0 28px #9fb6f7"></span></span></h2>
+<div style="margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center">
+<a href="#install" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 28px; border-radius: 999px; background: #9fb6f7; color: #0a0a0c; text-decoration: none; font-weight: 600">Install Cerul Robotics</a>
+<a href="mailto:samples@cerul.ai?subject=Labeled%20delivery" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 28px; border-radius: 999px; border: 1px solid #3a3b40; color: #eeeef0; text-decoration: none">Need labels delivered? Talk to us</a>
+</div>
+</section>
+
+<footer style="border-top: 1px solid #1d1d21">
+<div style="max-width: 1320px; margin: 0 auto; padding: 32px clamp(16px,4vw,40px) 48px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; font-size: 14px; color: #6f7177">
+<span style="display: inline-flex; flex-wrap: wrap; align-items: center; gap: 14px"><a href="index.html" class="brand" style="transform: scale(0.85); transform-origin: left center" aria-label="Cerul Robotics home"><svg class="brand-mark" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="229" fill="#eef0f4"/><g transform="translate(226 226) scale(1.126)" fill="#15171c"><rect width="211" height="508" rx="22"/><rect x="297" y="91" width="211" height="112" rx="22"/><rect x="297" y="301" width="211" height="207" rx="22"/></g></svg><span class="brand-word">Cerul</span><span class="brand-sub">Robotics</span></a><span>Built on <a href="https://cerul.ai">Cerul</a>, video memory infrastructure for AI products.</span></span>
+<span style="display: flex; flex-wrap: wrap; gap: 20px"><a href="https://github.com/cerul-ai/cerul-robotics" style="color: #a6a8ae">GitHub</a><a href="docs.html" style="color: #a6a8ae">Docs</a><a href="https://github.com/cerul-ai/cerul-robotics/blob/main/LICENSE" style="color: #a6a8ae">License</a></span>
+</div>
+</footer>
+</div>
+</body>
+</html>

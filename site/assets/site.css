@@ -1,0 +1,184 @@
+/* Shared behaviour for the Cerul Robotics pages. Layout and colour stay inline
+   in each page; this file holds the logo, motion and interaction states. */
+
+:root {
+  --accent: #9fb6f7;
+  --amber: #e2b56b;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* Logo: the Cerul mark, the Instrument Serif wordmark and a product tag. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #eeeef0;
+  text-decoration: none;
+}
+.brand:hover { color: #ffffff; }
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 7px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.4);
+  transition: transform 240ms var(--ease), box-shadow 240ms var(--ease);
+}
+.brand:hover .brand-mark {
+  transform: rotate(-6deg) scale(1.04);
+  box-shadow: 0 0 0 1px rgba(159, 182, 247, 0.5), 0 0 24px rgba(159, 182, 247, 0.35);
+}
+.brand-word {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 27px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.brand-sub {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 4px 7px;
+  border: 1px solid rgba(159, 182, 247, 0.38);
+  border-radius: 6px;
+  line-height: 1;
+}
+
+/* Hero entrance, slow push-in and scan light. */
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes push { from { transform: scale(1.09); } to { transform: scale(1); } }
+@keyframes scan { 0% { transform: translateY(-30%); opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { transform: translateY(130%); opacity: 0; } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.hero-media { animation: push 14s var(--ease) both; }
+.hero-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 38%;
+  background: linear-gradient(180deg, transparent, rgba(159, 182, 247, 0.07) 70%, rgba(159, 182, 247, 0.22) 99%, transparent);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: scan 7s linear infinite;
+}
+.rise { animation: rise 900ms var(--ease) both; }
+.rise-1 { animation-delay: 120ms; }
+.rise-2 { animation-delay: 260ms; }
+.rise-3 { animation-delay: 420ms; }
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff5d5d;
+  box-shadow: 0 0 10px #ff5d5d;
+  animation: blink 1.6s ease-in-out infinite;
+  vertical-align: middle;
+}
+.marquee-track { animation: marquee 40s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.glow-pulse { animation: pulse 6s ease-in-out infinite; }
+
+/* Episode lanes follow the playing video. */
+.bar { transition: opacity 220ms var(--ease), box-shadow 220ms var(--ease), filter 220ms var(--ease); }
+[data-episode] .bar { opacity: 0.38; }
+[data-episode] .bar.on { opacity: 1; filter: brightness(1.12); box-shadow: 0 0 18px var(--glow, rgba(159, 182, 247, 0.8)); }
+.callout { transition: border-color 220ms var(--ease), box-shadow 220ms var(--ease), opacity 220ms var(--ease); }
+.callout.idle { opacity: 0.45; box-shadow: none !important; }
+.swap { display: inline-block; transition: opacity 180ms var(--ease), transform 180ms var(--ease); }
+.swap.out { opacity: 0; transform: translateY(4px); }
+.label-row { transition: background-color 220ms var(--ease); }
+.label-row.on { background: rgba(159, 182, 247, 0.12); }
+.strip-frame { transition: filter 260ms var(--ease), transform 260ms var(--ease), box-shadow 260ms var(--ease); filter: brightness(0.55) saturate(0.7); }
+.strip-frame.on { filter: none; transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--accent); }
+
+/* Scroll reveal and count-up targets. Hidden only when scripting is on. */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 900ms var(--ease), transform 900ms var(--ease); }
+.js .reveal.in { opacity: 1; transform: none; }
+.js .reveal-2 { transition-delay: 120ms; }
+.js .reveal-3 { transition-delay: 240ms; }
+.js .reveal-4 { transition-delay: 360ms; }
+.underline-draw { transform-origin: left; transform: scaleX(0); }
+.in .underline-draw, .underline-draw.in { animation: draw 1100ms var(--ease) 300ms both; }
+
+/* Cursor spotlight on dark cards. */
+.spot { position: relative; isolation: isolate; }
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 50%), rgba(159, 182, 247, 0.16), transparent 62%);
+  opacity: 0;
+  transition: opacity 300ms var(--ease);
+  pointer-events: none;
+}
+.spot:hover::before { opacity: 1; }
+.lift { transition: transform 300ms var(--ease), border-color 300ms var(--ease); }
+.lift:hover { transform: translateY(-4px); border-color: rgba(159, 182, 247, 0.45) !important; }
+.zoom-img { transition: transform 900ms var(--ease); }
+.lift:hover .zoom-img { transform: scale(1.04); }
+
+/* Motion control required by the brand motion rules. */
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(10, 10, 12, 0.6);
+  color: #d0d1d6;
+  font: 500 13px 'Geist', ui-sans-serif, sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.motion-toggle:hover { color: #ffffff; border-color: rgba(255, 255, 255, 0.4); }
+.motion-toggle:focus-visible, .brand:focus-visible, a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.motion-off *, .motion-off *::before, .motion-off *::after { animation-play-state: paused !important; }
+
+/* Docs code copy buttons. */
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #33343a;
+  background: #1a1a1e;
+  color: #d0d1d6;
+  font: 500 12px 'Geist', ui-sans-serif, sans-serif;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 160ms var(--ease);
+}
+.has-copy:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn.done { color: #8fd3bf; border-color: rgba(143, 211, 191, 0.5); }
+
+@media (max-width: 1199px) { .hero-callouts { display: none !important; } }
+@media (max-width: 639px) { .narrow-hide { display: none; } }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal { opacity: 1; transform: none; }
+  .underline-draw { transform: none; }
+  .hero-scan { display: none; }
+}
