@@ -26,7 +26,10 @@ project configuration is `cerul-robotics.toml`. Existing adjacent `.cerul` sidec
 retain their names for compatibility. An explicit workspace can reuse a previous
 registry. Saved provider credentials may be read from Cerul without being changed.
 
-Shared engine revision: `b92446d783df93bb97162e2ae807237814da7f9e`
-([core extraction PR](https://github.com/cerul-ai/cerul/pull/292)).
+The boundary was introduced by the
+[core extraction PR](https://github.com/cerul-ai/cerul/pull/292). Robotics links
+the Cerul library at a release tag named in `Cargo.toml`, currently `v0.0.18`
+(`cde43c808296155071b28b333d7c4f2c576ccfa4`, locked in `Cargo.lock`). Dependabot
+proposes newer core tags; review the core changelog before accepting one.
 New portable exports identify their generator as `cerul-robotics`; legacy Cerul
 exports retain read compatibility.

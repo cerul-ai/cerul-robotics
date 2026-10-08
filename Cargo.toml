@@ -9,7 +9,7 @@ repository = "https://github.com/cerul-ai/cerul-robotics"
 include = ["/Cargo.toml", "/Cargo.lock", "/LICENSE", "/THIRD_PARTY_NOTICES.md", "/PROVENANCE.md", "/README.md", "/src/**/*.rs", "/examples/*.rs", "/docs/**/*.md", "/prompts/*.md", "/schemas/*.json", "/skills/**/*.md", "/models/hands/*", "/packaging/licenses/*", "/tests/*.rs", "/tests/*.py", "/tests/fixtures/*"]
 
 [dependencies]
-cerul = { git = "https://github.com/cerul-ai/cerul", rev = "46df5706c509acf009fb9253fcd2ad754dd3d9a9" }
+cerul = { git = "https://github.com/cerul-ai/cerul", tag = "v0.0.18" }
 anyhow = "1"
 clap = { version = "4", features = ["derive", "env"] }
 serde = { version = "1", features = ["derive"] }
