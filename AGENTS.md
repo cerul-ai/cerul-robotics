@@ -8,6 +8,7 @@ adapters/writeback and review-video rendering. Reuse the pinned Cerul library
 for media processing, providers, OCR, annotations, sidecars and search. Do not
 copy its implementation or introduce a circular dependency. Keep one root Rust
 crate with a library and a thin CLI; no product UI, billing or hosted services.
+The static website lives in `site/`; see site/README.md.
 
 Preserve integer-microsecond time, content-aware invalidation, atomic
 publication, interruption recovery and zero-model-call index rebuilds. Library
@@ -19,7 +20,8 @@ requires macOS arm64/Linux x86_64, real hand inference, actual model endpoint
 smokes, interruption recovery and official LeRobot loader round-trips. See
 docs/development/validation.md. Mock-only checks do not replace release gates.
 
-Never commit secrets, user media, indexes or production exports. Preserve
+Never commit secrets, user media, indexes or production exports; `site/media/`
+holds only showcase media cleared for publication. Preserve
 LICENSE and model/fixture provenance. Retain original Cerul history, tags and
 ffmpeg-vendor release assets. Never delete local worktrees or user artifacts.
 Use main as the only long-lived branch and codex/ for agent branches. Public
