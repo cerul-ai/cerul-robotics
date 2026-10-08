@@ -11,8 +11,9 @@ Preview locally:
 python3 -m http.server 4190 --directory site
 ```
 
-Then open <http://localhost:4190>. Any static host can serve the directory
-as-is.
+Then open <http://localhost:4190>. `.github/workflows/site.yml` publishes the
+directory to GitHub Pages (https://cerul-ai.github.io/cerul-robotics/) whenever
+`site/` changes on `main`.
 
 ## Editing
 
