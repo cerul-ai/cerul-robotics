@@ -1,0 +1,19 @@
+# Cerul Robotics
+
+> Open-source CLI that labels robot episodes with your own model endpoints: timed subtasks, events, hand-object interactions and state changes, local human-hand tracking on CPU, review videos, and LeRobot v3.1 subtask writeback. One binary for macOS Apple Silicon and Linux x86_64, Apache-2.0, no account. The hosted API is not open yet.
+
+Labels are generated and not human-verified. It tracks human hands, not robot grippers, and does not estimate depth or calibrated 3D pose.
+
+## Pages
+
+- [Home](https://robotics.cerul.ai/): what it does, install, a real labeled episode
+- [Showcase](https://robotics.cerul.ai/showcase): real output with its annotations.json, summary.md and review video
+- [Docs](https://robotics.cerul.ai/docs): install, first episode, LeRobot writeback, output files, JSON events, exit codes, configuration
+
+## Source
+
+- [Repository](https://github.com/cerul-ai/cerul-robotics)
+- [Annotation guide](https://github.com/cerul-ai/cerul-robotics/blob/main/docs/annotation.md)
+- [LeRobot compatibility and writeback](https://github.com/cerul-ai/cerul-robotics/blob/main/docs/lerobot.md)
+- [Agent skill](https://github.com/cerul-ai/cerul-robotics/blob/main/skills/cerul-robotics/SKILL.md)
+- [Cerul](https://cerul.ai): video memory infrastructure for AI products
