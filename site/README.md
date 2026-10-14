@@ -1,19 +1,26 @@
 # Website
 
-Static pages for the Cerul Robotics website: `index.html` (home),
-`showcase.html` and `docs.html`. There is no framework or build step. Shared
-behaviour lives in `assets/site.css` and `assets/site.js`; fonts load from
-Google Fonts; everything else is in this directory.
+Static pages for https://robotics.cerul.ai: `index.html` (home),
+`showcase.html`, `docs.html` and `404.html`. There is no framework or build
+step. Shared behaviour lives in `assets/site.css` and `assets/site.js`; fonts
+load from Google Fonts; everything else is in this directory.
 
-Preview locally:
+The site is a Cloudflare Worker with static assets only (`wrangler.jsonc` at
+the repository root). Pages are served at clean URLs (`/showcase`, `/docs`),
+`_headers` sets caching and security headers, and `.assetsignore` keeps this
+README unpublished. Preview locally with the same routing:
 
 ```sh
-python3 -m http.server 4190 --directory site
+npx wrangler@4.136.0 dev
 ```
 
-Then open <http://localhost:4190>. `.github/workflows/site.yml` publishes the
-directory to GitHub Pages (https://cerul-ai.github.io/cerul-robotics/) whenever
-`site/` changes on `main`.
+`.github/workflows/site.yml` deploys whenever `site/` or `wrangler.jsonc`
+changes on `main`, using the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
+secrets of the `production` environment.
+
+Search and sharing: every page has a canonical URL and Open Graph/Twitter
+tags pointing at `og.jpg`; the home page carries `SoftwareApplication`
+structured data. Keep `sitemap.xml` and `llms.txt` in step with the pages.
 
 ## Editing
 
@@ -46,6 +53,7 @@ shown only at 1200 px and wider.
 | `review.mp4` | `cerul-robotics render` output, re-encoded (H.264, CRF 27) for size |
 | `hero.mp4` | The same render cropped to 1280×720 to remove the caption, H.264 CRF 31, for the looping hero and showcase stage |
 | `annotations.json`, `summary.md` | `cerul-robotics annotate --semantic --hands` output |
+| `../og.jpg` | 1200×630 share image: a `hands-3.9.jpg` frame with the logo and episode lanes |
 
 The output came from `cerul-robotics` 0.1.0 with the default Gemini endpoint on
 a 7-second first-person loom clip. Labels are unedited and not human-reviewed.

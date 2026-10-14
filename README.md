@@ -1,6 +1,7 @@
 # Cerul Robotics
 
 Search, annotate and review robot episodes using your own model endpoints.
+Website and showcase: <https://robotics.cerul.ai>.
 
 Cerul Robotics owns LeRobot dataset adapters and writeback, semantic task labels,
 local human-hand tracking, and annotated review videos. It depends on the
