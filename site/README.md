@@ -14,9 +14,12 @@ README unpublished. Preview locally with the same routing:
 npx wrangler@4.136.0 dev
 ```
 
-`.github/workflows/site.yml` deploys whenever `site/` or `wrangler.jsonc`
-changes on `main`, using the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
-secrets of the `production` environment.
+Deployment is Cloudflare Workers Builds, connected to this repository in the
+Cloudflare dashboard (Worker `cerul-robotics-site`). A push to `main` that
+touches `site/` or `wrangler.jsonc` runs `npx wrangler@4.136.0 deploy`; there
+is no build step and no other branch builds. No Cloudflare credential is
+stored in GitHub. To deploy by hand, run the same command with a logged-in
+Wrangler.
 
 Search and sharing: every page has a canonical URL and Open Graph/Twitter
 tags pointing at `og.jpg`; the home page carries `SoftwareApplication`
