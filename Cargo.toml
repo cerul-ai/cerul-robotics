@@ -1,6 +1,6 @@
 [package]
 name = "cerul-robotics"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "Apache-2.0"
 description = "Robot episode annotation and LeRobot workflows powered by Cerul"
@@ -9,7 +9,7 @@ repository = "https://github.com/cerul-ai/cerul-robotics"
 include = ["/Cargo.toml", "/Cargo.lock", "/LICENSE", "/THIRD_PARTY_NOTICES.md", "/PROVENANCE.md", "/README.md", "/src/**/*.rs", "/examples/*.rs", "/docs/**/*.md", "/prompts/*.md", "/schemas/*.json", "/skills/**/*.md", "/models/hands/*", "/packaging/licenses/*", "/tests/*.rs", "/tests/*.py", "/tests/fixtures/*"]
 
 [dependencies]
-cerul = { git = "https://github.com/cerul-ai/cerul", tag = "v0.0.18" }
+cerul = { git = "https://github.com/cerul-ai/cerul", tag = "v0.0.20" }
 anyhow = "1"
 clap = { version = "4", features = ["derive", "env"] }
 serde = { version = "1", features = ["derive"] }
