@@ -5,6 +5,15 @@ publishes the section that matches the tagged version as the GitHub release
 notes, so keep an entry under **Unreleased** for every user-visible change and
 rename that heading when a version is cut.
 
+## 0.1.1 - 2026-10-22
+
+### Security
+- Built on Cerul 0.0.20. HTTPS requests to model endpoints and media
+  downloads now refuse any certificate chain that presents one of the eight
+  eMudhra intermediate CA keys disclosed on 2026-10-20 (GO-2026-6809).
+  0.1.0 trusted certificates forged with those keys whenever the system trust
+  store still held `AAA Certificate Services` or `emSign ECC Root CA - G3`.
+
 ## 0.1.0 - 2026-10-07
 
 First release as a separate product. These workflows previously shipped inside
